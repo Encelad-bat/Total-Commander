@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Total_Commander.ViewModel;
 
 namespace Total_Commander
 {
@@ -23,6 +24,7 @@ namespace Total_Commander
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new IO_Object_ViewModel();
         }
     }
 }

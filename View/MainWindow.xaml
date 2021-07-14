@@ -12,8 +12,11 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <ListView ItemsSource="{Binding First_Window_Items}"></ListView>
+        <ListView ItemsSource="{Binding Second_Window_Items}"></ListView>
     </Grid>
 </Window>
