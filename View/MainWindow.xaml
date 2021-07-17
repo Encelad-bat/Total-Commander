@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding First_Window_Items}"></ListView>
-        <ListView ItemsSource="{Binding Second_Window_Items}"></ListView>
+        <ListView x:Name="First_Window_ListView" ItemsSource="{Binding First_Window_Items}" Grid.Row="0" Grid.Column="0"></ListView>
+        <ListView x:Name="Second_Window_ListView" ItemsSource="{Binding Second_Window_Items}" Grid.Row="0" Grid.Column="1"></ListView>
     </Grid>
 </Window>

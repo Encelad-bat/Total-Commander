@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Drawing;
 
 namespace Total_Commander.Model
 {
     class IO_Object
     {
+        public Icon Icon { get; set; }
+
         public string Path { get; set; }
 
         public dynamic Object { get; set; }
@@ -28,6 +31,11 @@ namespace Total_Commander.Model
             {
                 this.Object = null;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"[{this.Object.Name}]";
         }
     }
 }
