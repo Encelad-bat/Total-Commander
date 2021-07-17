@@ -14,33 +14,22 @@ namespace Total_Commander.ViewModel
 {
     class IO_Object_ViewModel : INotifyPropertyChanged
     {
-        //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
+        //==========================================================================================================================
+        #region =======================================================PROPERTIES===========================================================
 
         private ObservableCollection<IO_Object> first_window_items = new ObservableCollection<IO_Object>();
-
         public ObservableCollection<IO_Object> First_Window_Items { get { return this.first_window_items; } set { this.first_window_items = value; OnPropertyChanged("First_Window_Items"); } }
 
 
-        //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-
         private ObservableCollection<IO_Object> second_window_items = new ObservableCollection<IO_Object>();
-
         public ObservableCollection<IO_Object> Second_Window_Items { get { return this.second_window_items; } set { this.second_window_items = value; OnPropertyChanged("Second_Window_Items"); } }
 
 
-        //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-
-
         private ObservableCollection<string> drives = new ObservableCollection<string>(Environment.GetLogicalDrives());
-
         public ObservableCollection<string> Drives { get { return drives; } set { drives = value; OnPropertyChanged("Drives"); } }
 
 
         private string first_selected_drive;
-
         public string First_Selected_Drive
         {
             get { return first_selected_drive; }
@@ -58,8 +47,8 @@ namespace Total_Commander.ViewModel
             }
         }
 
-        private string second_selected_drive;
 
+        private string second_selected_drive;
         public string Second_Selected_Drive
         {
             get { return second_selected_drive; }
@@ -77,15 +66,13 @@ namespace Total_Commander.ViewModel
             }
         }
 
-
-        //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
+        #endregion
+        //==========================================================================================================================
+        #region =============================================PROPERTY CHANGED EVENT AND METHOD==============================================
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string name = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-
-        //-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+        #endregion
     }
 }

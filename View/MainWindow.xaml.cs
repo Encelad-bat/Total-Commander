@@ -25,6 +25,10 @@ namespace Total_Commander
     {
         //==========================================================================================================================
         #region =======================================================VARIABLES============================================================
+
+        private readonly string temp_directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Total Commander by Ncelad";
+        private string buffer_file_path;
+
         private readonly string[] drives = Environment.GetLogicalDrives();
         private readonly string[] forbidden_directories = {"Boot","Documents and Settings","Recovery","System Volume Information", "Config.Msi"};
         private readonly string[] forbidden_files = {"bootmgr","BOOTNXT","BOOTSECT.BAK"};
@@ -55,7 +59,9 @@ namespace Total_Commander
             this.Second_Window_TextBox.KeyDown += Second_Window_TextBox_KeyDown;
 
             this.First_Window_ListView.MouseDoubleClick += First_Window_ListView_MouseDoubleClick;
-            this.Second_Window_ListView.MouseDoubleClick += Second_Window_ListView_MouseDoubleClick; ;
+            this.Second_Window_ListView.MouseDoubleClick += Second_Window_ListView_MouseDoubleClick;
+
+            Directory.CreateDirectory(this.temp_directory);
         }
 
         #endregion
@@ -155,6 +161,156 @@ namespace Total_Commander
             }
         }
 
+        private void cut_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.First_Window_ListView.SelectedItem != null)
+                {
+                    var file_path = (this.First_Window_ListView.SelectedItem as IO_Object).Path;
+                    var file_fullname = file_path.Split('\\');
+                    this.buffer_file_path = this.temp_directory + $"\\{file_fullname[file_fullname.Length - 1]}";
+                    File.Copy(file_path, this.buffer_file_path);
+                    File.Delete(file_path);
+
+
+                    var update_path = this.First_Window_TextBox.Text;
+                    if (update_path.Length > 1)
+                    {
+                        GetObjects(update_path, 1, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 1, false);
+                    }
+                }
+                else if (this.Second_Window_ListView.SelectedItem != null)
+                {
+                    var file_path = (this.Second_Window_ListView.SelectedItem as IO_Object).Path;
+                    var file_fullname = file_path.Split('\\');
+                    this.buffer_file_path = this.temp_directory + $"\\{file_fullname[file_fullname.Length - 1]}";
+                    File.Copy(file_path, this.buffer_file_path);
+                    File.Delete(file_path);
+
+
+                    var update_path = this.Second_Window_TextBox.Text;
+                    if (update_path.Length > 2)
+                    {
+                        GetObjects(update_path, 2, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 2, false);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nothing to cut!", "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void copy_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.First_Window_ListView.SelectedItem != null)
+                {
+                    var file_path = (this.First_Window_ListView.SelectedItem as IO_Object).Path;
+                    var file_fullname = file_path.Split('\\');
+                    this.buffer_file_path = this.temp_directory + $"\\{file_fullname[file_fullname.Length - 1]}";
+                    File.Copy(file_path, this.buffer_file_path);
+
+
+                    var update_path = this.First_Window_TextBox.Text;
+                    if (update_path.Length > 1)
+                    {
+                        GetObjects(update_path, 1, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 1, false);
+                    }
+                }
+                else if (this.Second_Window_ListView.SelectedItem != null)
+                {
+                    var file_path = (this.Second_Window_ListView.SelectedItem as IO_Object).Path;
+                    var file_fullname = file_path.Split('\\');
+                    this.buffer_file_path = this.temp_directory + $"\\{file_fullname[file_fullname.Length - 1]}";
+                    File.Copy(file_path, this.buffer_file_path);
+
+
+                    var update_path = this.Second_Window_TextBox.Text;
+                    if (update_path.Length > 2)
+                    {
+                        GetObjects(update_path, 2, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 2, false);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nothing to copy!", "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void paste_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.First_Window_ListView.SelectedItem != null)
+                {
+                    string[] buffer_file_fullname = this.buffer_file_path.Split('\\');
+                    File.Copy(this.buffer_file_path, this.First_Window_TextBox.Text + buffer_file_fullname[buffer_file_fullname.Length-1]);
+
+
+                    var update_path = this.First_Window_TextBox.Text;
+                    if (update_path.Length > 1)
+                    {
+                        GetObjects(update_path, 1, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 1, false);
+                    }
+                }
+                else if (this.Second_Window_ListView.SelectedItem != null)
+                {
+                    string[] buffer_file_fullname = this.buffer_file_path.Split('\\');
+                    File.Copy(this.buffer_file_path, this.Second_Window_TextBox.Text + buffer_file_fullname[buffer_file_fullname.Length - 1]);
+
+
+                    var update_path = this.Second_Window_TextBox.Text;
+                    if (update_path.Length > 1)
+                    {
+                        GetObjects(update_path, 2, true);
+                    }
+                    else
+                    {
+                        GetObjects(update_path, 2, false);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nowhere to paste!", "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         #endregion
         //==========================================================================================================================
         #region =====================================================MAIN LOAD FUNC=========================================================

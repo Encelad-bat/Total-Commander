@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Total_Commander"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.05*"></RowDefinition>
             <RowDefinition Height="0.05*"></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -26,5 +27,17 @@
 
         <TextBox x:Name="First_Window_TextBox" Grid.Row="2" Grid.Column="0" Text="{Binding First_Selected_Drive}"></TextBox>
         <TextBox x:Name="Second_Window_TextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Second_Selected_Drive}"></TextBox>
+
+        <Grid x:Name="Buttons_StackPanel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" x:Name="cut_Button" Content="Cut" Click="cut_Button_Click"></Button>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="copy_Button" Content="Copy" Click="copy_Button_Click"></Button>
+            <Button Grid.Row="2" Grid.Column="2" x:Name="paste_Button" Content="Paste" Click="paste_Button_Click"></Button>
+        </Grid>
     </Grid>
 </Window>
