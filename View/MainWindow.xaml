@@ -8,7 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.05*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -16,7 +18,13 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="First_Window_ListView" ItemsSource="{Binding First_Window_Items}" Grid.Row="0" Grid.Column="0"></ListView>
-        <ListView x:Name="Second_Window_ListView" ItemsSource="{Binding Second_Window_Items}" Grid.Row="0" Grid.Column="1"></ListView>
+        <ComboBox x:Name="First_Window_ComboBox" ItemsSource="{Binding Drives}" Grid.Row="0" Grid.Column="0" SelectedValue="{Binding First_Selected_Drive}"></ComboBox>
+        <ComboBox x:Name="Second_Window_ComboBox" ItemsSource="{Binding Drives}" Grid.Row="0" Grid.Column="1" SelectedValue="{Binding Second_Selected_Drive}"></ComboBox>
+        
+        <ListView x:Name="First_Window_ListView" ItemsSource="{Binding First_Window_Items}" Grid.Row="1" Grid.Column="0"></ListView>
+        <ListView x:Name="Second_Window_ListView" ItemsSource="{Binding Second_Window_Items}" Grid.Row="1" Grid.Column="1"></ListView>
+
+        <TextBox x:Name="First_Window_TextBox" Grid.Row="2" Grid.Column="0" Text="{Binding First_Selected_Drive}"></TextBox>
+        <TextBox x:Name="Second_Window_TextBox" Grid.Row="2" Grid.Column="1" Text="{Binding Second_Selected_Drive}"></TextBox>
     </Grid>
 </Window>
