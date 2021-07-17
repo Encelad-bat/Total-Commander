@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Total_Commander.Model;
 using Total_Commander.ViewModel;
 
 namespace Total_Commander
@@ -40,17 +41,21 @@ namespace Total_Commander
 
             if (drives.Length == 1)
             {
-                GetObjects(drives[0], 1);
+                GetObjects(drives[0], 1,false);
             }
             else
             {
-                GetObjects(drives[0], 1);
-                GetObjects(drives[1], 2);
+                GetObjects(drives[0], 1,false);
+                GetObjects(drives[1], 2,false);
                 (this.DataContext as IO_Object_ViewModel).First_Selected_Drive = drives[0];
                 (this.DataContext as IO_Object_ViewModel).Second_Selected_Drive = drives[1];
             }
+
             this.First_Window_TextBox.KeyDown += First_Window_TextBox_KeyDown;
             this.Second_Window_TextBox.KeyDown += Second_Window_TextBox_KeyDown;
+
+            this.First_Window_ListView.MouseDoubleClick += First_Window_ListView_MouseDoubleClick;
+            this.Second_Window_ListView.MouseDoubleClick += Second_Window_ListView_MouseDoubleClick; ;
         }
 
         #endregion
@@ -64,7 +69,7 @@ namespace Total_Commander
                 string path = (sender as TextBox).Text;
                 try
                 {
-                    GetObjects(path, 1);
+                    GetObjects(path, 1,true);
                 }
                 catch (Exception ex)
                 {
@@ -81,7 +86,7 @@ namespace Total_Commander
                 string path = (sender as TextBox).Text;
                 try
                 {
-                    GetObjects(path, 2);
+                    GetObjects(path, 2,true);
                 }
                 catch(Exception ex)
                 {
@@ -91,11 +96,70 @@ namespace Total_Commander
             }
         }
 
+        private void First_Window_ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if(((sender as ListView).SelectedItem as IO_Object).Object.ToString() != ".."){
+                    this.First_Window_TextBox.Text = ((sender as ListView).SelectedItem as IO_Object).Object.FullName;
+                    GetObjects(((sender as ListView).SelectedItem as IO_Object).Object.FullName, 1, true);
+                }
+                else
+                {
+                    string[] prev_path = this.First_Window_TextBox.Text.Split('\\');
+                    if (prev_path.Length > 2)
+                    {
+                        this.First_Window_TextBox.Text = this.First_Window_TextBox.Text.Replace('\\' + prev_path[prev_path.Length - 1], "");
+                        GetObjects(this.First_Window_TextBox.Text, 1, true);
+                    }
+                    else
+                    {
+                        this.First_Window_TextBox.Text = this.First_Window_TextBox.Text.Replace(prev_path[prev_path.Length - 1], "");
+                        GetObjects(this.First_Window_TextBox.Text, 1, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Second_Window_ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (((sender as ListView).SelectedItem as IO_Object).Object.ToString() != "..")
+                {
+                    this.Second_Window_TextBox.Text = ((sender as ListView).SelectedItem as IO_Object).Object.FullName;
+                    GetObjects(((sender as ListView).SelectedItem as IO_Object).Object.FullName, 2, true);
+                }
+                else
+                {
+                    string[] prev_path = this.Second_Window_TextBox.Text.Split('\\');
+                    if (prev_path.Length > 2)
+                    {
+                        this.Second_Window_TextBox.Text = this.Second_Window_TextBox.Text.Replace('\\' + prev_path[prev_path.Length - 1], "");
+                        GetObjects(this.Second_Window_TextBox.Text, 2, true);
+                    }
+                    else
+                    {
+                        this.Second_Window_TextBox.Text = this.Second_Window_TextBox.Text.Replace(prev_path[prev_path.Length - 1], "");
+                        GetObjects(this.Second_Window_TextBox.Text, 2, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Operation failed!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         #endregion
         //==========================================================================================================================
         #region =====================================================MAIN LOAD FUNC=========================================================
 
-        public void GetObjects(string path, int collection_num)
+        public void GetObjects(string path, int collection_num, bool is_inner)
         {
             var viewmodel = (this.DataContext as IO_Object_ViewModel);
 
@@ -104,6 +168,10 @@ namespace Total_Commander
             if (collection_num == 1)
             {
                 viewmodel.First_Window_Items.Clear();
+                if (is_inner)
+                {
+                    viewmodel.First_Window_Items.Add(IO_Object.Inner_Directory);
+                }
 
                 //=============================================================
 
@@ -155,6 +223,10 @@ namespace Total_Commander
             else if (collection_num == 2)
             {
                 viewmodel.Second_Window_Items.Clear();
+                if (is_inner)
+                {
+                    viewmodel.Second_Window_Items.Add(IO_Object.Inner_Directory);
+                }
 
                 //=============================================================
 

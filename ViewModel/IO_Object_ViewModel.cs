@@ -48,7 +48,7 @@ namespace Total_Commander.ViewModel
                 OnPropertyChanged("First_Selected_Drive");
                 try
                 {
-                    (App.Current.MainWindow as MainWindow).GetObjects(value,1);
+                    (App.Current.MainWindow as MainWindow).GetObjects(value,1,false);
                     first_selected_drive = value;
                 }
                 catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Total_Commander.ViewModel
                 OnPropertyChanged("Second_Selected_Drive");
                 try
                 {
-                    (App.Current.MainWindow as MainWindow).GetObjects(value, 2);
+                    (App.Current.MainWindow as MainWindow).GetObjects(value, 2,false);
                     second_selected_drive = value;
                 }
                 catch(Exception ex)

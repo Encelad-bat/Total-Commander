@@ -10,11 +10,16 @@ namespace Total_Commander.Model
 {
     class IO_Object
     {
-        public Icon Icon { get; set; }
+        public static IO_Object Inner_Directory { get; set; } = new IO_Object() { Object = new DirectoryInfo("..") };
 
         public string Path { get; set; }
 
         public dynamic Object { get; set; }
+
+        public IO_Object()
+        {
+
+        }
 
         public IO_Object(string path)
         {
@@ -35,7 +40,14 @@ namespace Total_Commander.Model
 
         public override string ToString()
         {
-            return $"[{this.Object.Name}]";
+            if(this.Object.Name == "bin")
+            {
+                return $"[{this.Object.ToString()}]";
+            }
+            else
+            {
+                return $"[{this.Object.Name}]";
+            }
         }
     }
 }
